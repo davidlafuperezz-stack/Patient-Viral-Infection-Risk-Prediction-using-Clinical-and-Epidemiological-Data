@@ -9,33 +9,33 @@ The goal is to identify key factors associated with infection status and build p
 
 This project includes exploratory data analysis (EDA), data visualization, and machine learning models for classification.
 
-##Objective
+## Objective
 - Predict whether a patient is infected (0/1)
 - Analyze clinical and epidemiological risk factors
 - Compare different machine learning models
 - Evaluate performance using standard classification metrics
 
-##Dataset Description
+## Dataset Description
 The dataset is synthetically generated to simulate realistic biomedical data and includes:
 
-###Demographics
+### Demographics
 - Age, sex, BMI
 - Smoking and alcohol use
 - Blood type
 
-###Exposure factors
+### Exposure factors
 - Viral exposure level
 - Contact with infected individuals
 - Crowded environments
 - Travel history
 
-###Clinical biomarkers
+### Clinical biomarkers
 - CRP (inflammation marker)
 - Antibody levels
 - Body temperature
 - Oxygen saturation
 
-###Epidemiological factors
+### Epidemiological factors
 - Population density
 - Regional risk level
 - Hospital exposure
@@ -47,27 +47,27 @@ The dataset is synthetically generated to simulate realistic biomedical data and
 - Random Forest Classifier (non-linear relationships, higher performance)
 
 
-##Evaluation Metrics
+## Evaluation Metrics
 - Accuracy
 - Precision, Recall, F1-score
 - ROC-AUC
 - Cross-validation
 - Confusion matrix
 
-##Visualizations
+## Visualizations
 - Infection distribution analysis
 - Feature distributions (age, BMI, biomarkers)
 - Correlation heatmap
 - Feature importance plot
 - ROC curve
 
-##Key Insights
+## Key Insights
 - Viral exposure and contact history are strong predictors of infection
 - Antibody levels are negatively correlated with infection risk
 - CRP levels increase in infected patients
 - Random Forest performs better than Logistic Regression
 
-##Tech Stack
+## Tech Stack
 - Python
 - Pandas
 - NumPy
@@ -75,15 +75,15 @@ The dataset is synthetically generated to simulate realistic biomedical data and
 - Matplotlib
 - Seaborn
 
-##Project Structure
+## Project Structure
 data/
   viral_infection_dataset.csv
 generate_viral_dataset.py
 analysis.py
 ml_model.py
 README.md
-##Notes
+## Notes
 This project is for educational and portfolio purposes. The dataset is synthetic but designed to reflect realistic biomedical relationships.
 
-##Author
+## Author
 David Lafuente Pérez. Biomedical background with ongoing training in Machine Learning and AI applications in healthcare.
