@@ -1,0 +1,158 @@
+import numpy as np
+import pandas as pd
+
+np.random.seed(42)
+
+n = 5000  # número de pacientes
+
+# -----------------------
+# DEMOGRAPHICS
+# -----------------------
+age = np.random.randint(0, 90, n)
+sex = np.random.binomial(1, 0.5, n)
+bmi = np.clip(np.random.normal(25, 5, n), 15, 45)
+
+smoking = np.random.binomial(1, 0.25, n)
+alcohol = np.random.binomial(1, 0.3, n)
+
+blood_type = np.random.choice(["A", "B", "AB", "O"], n)
+
+# -----------------------
+# EXPOSURE VARIABLES
+# -----------------------
+viral_exposure = np.random.randint(0, 11, n)
+contact_infected = np.random.binomial(1, 0.3, n)
+days_exposed = np.random.randint(0, 31, n)
+travel_history = np.random.binomial(1, 0.2, n)
+crowded_env = np.random.binomial(1, 0.4, n)
+healthcare_worker = np.random.binomial(1, 0.1, n)
+
+# -----------------------
+# CLINICAL BACKGROUND
+# -----------------------
+chronic_diseases = np.random.randint(0, 4, n)
+diabetes = np.random.binomial(1, 0.15, n)
+hypertension = np.random.binomial(1, 0.2, n)
+immunosuppressed = np.random.binomial(1, 0.08, n)
+vaccinated = np.random.binomial(1, 0.6, n)
+days_since_vax = np.where(vaccinated == 1, np.random.randint(1, 365, n), 0)
+
+# -----------------------
+# SYMPTOMS
+# -----------------------
+fever = np.random.binomial(1, 0.3, n)
+cough = np.random.binomial(1, 0.35, n)
+fatigue = np.random.binomial(1, 0.4, n)
+loss_smell = np.random.binomial(1, 0.1, n)
+sore_throat = np.random.binomial(1, 0.25, n)
+breath_short = np.random.binomial(1, 0.15, n)
+headache = np.random.binomial(1, 0.3, n)
+
+# -----------------------
+# BIOMARKERS (realistic distributions)
+# -----------------------
+wbc = np.random.normal(7, 2, n)
+lymphocytes = np.random.normal(2.5, 0.8, n)
+neutrophils = np.random.normal(4.5, 1.5, n)
+crp = np.abs(np.random.normal(5, 10, n))
+il6 = np.abs(np.random.normal(3, 6, n))
+antibodies = np.random.normal(50, 20, n)
+temperature = np.random.normal(36.8, 0.7, n)
+oxygen_sat = np.clip(np.random.normal(96, 3, n), 80, 100)
+
+# -----------------------
+# EPIDEMIOLOGY
+# -----------------------
+population_density = np.random.choice([0, 1, 2], n)  # low/med/high
+region_risk = np.random.randint(0, 11, n)
+hospital_exposure = np.random.binomial(1, 0.15, n)
+outbreak_region = np.random.binomial(1, 0.25, n)
+quarantine_compliance = np.random.randint(0, 11, n)
+
+# -----------------------
+# INFECTION RISK MODEL (REALISTIC LOGIC)
+# -----------------------
+risk_score = (
+    0.03 * age +
+    2 * contact_infected +
+    0.4 * viral_exposure +
+    0.2 * days_exposed +
+    1.5 * crowded_env +
+    2 * outbreak_region +
+    1.2 * immunosuppressed +
+    0.8 * diabetes +
+    0.6 * hypertension +
+    0.5 * smoking +
+    0.02 * crp +
+    -0.02 * antibodies +
+    -0.3 * vaccinated +
+    0.1 * fever +
+    0.1 * cough
+)
+
+# noise (real world randomness)
+risk_score += np.random.normal(0, 2, n)
+
+# probability
+prob = 1 / (1 + np.exp(-0.3 * (risk_score - 5)))
+
+infection_status = np.random.binomial(1, prob)
+
+# -----------------------
+# CREATE DATAFRAME
+# -----------------------
+df = pd.DataFrame({
+    "age": age,
+    "sex": sex,
+    "bmi": bmi,
+    "smoking": smoking,
+    "alcohol": alcohol,
+    "blood_type": blood_type,
+
+    "viral_exposure": viral_exposure,
+    "contact_infected": contact_infected,
+    "days_exposed": days_exposed,
+    "travel_history": travel_history,
+    "crowded_env": crowded_env,
+    "healthcare_worker": healthcare_worker,
+
+    "chronic_diseases": chronic_diseases,
+    "diabetes": diabetes,
+    "hypertension": hypertension,
+    "immunosuppressed": immunosuppressed,
+    "vaccinated": vaccinated,
+    "days_since_vax": days_since_vax,
+
+    "fever": fever,
+    "cough": cough,
+    "fatigue": fatigue,
+    "loss_smell": loss_smell,
+    "sore_throat": sore_throat,
+    "breath_short": breath_short,
+    "headache": headache,
+
+    "wbc": wbc,
+    "lymphocytes": lymphocytes,
+    "neutrophils": neutrophils,
+    "crp": crp,
+    "il6": il6,
+    "antibodies": antibodies,
+    "temperature": temperature,
+    "oxygen_sat": oxygen_sat,
+
+    "population_density": population_density,
+    "region_risk": region_risk,
+    "hospital_exposure": hospital_exposure,
+    "outbreak_region": outbreak_region,
+    "quarantine_compliance": quarantine_compliance,
+
+    "infection_status": infection_status
+})
+
+# -----------------------
+# SAVE
+# -----------------------
+df.to_csv("viral_infection_dataset.csv", index=False)
+
+print("Dataset created:", df.shape)
+print(df.head())
