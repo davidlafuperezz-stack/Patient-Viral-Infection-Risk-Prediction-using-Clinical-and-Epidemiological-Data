@@ -1,8 +1,8 @@
 # Patient-Viral-Infection-Risk-Prediction-using-Clinical-and-Epidemiological-Data
 Machine learning project for analyzing viral infection risk using synthetic clinical, immunological, and epidemiological data. Includes exploratory data analysis, visualization, and predictive modeling to identify key factors associated with infection status.
-# 🧬 Patient Viral Infection Risk Prediction using Clinical and Epidemiological Data
+# Patient Viral Infection Risk Prediction using Clinical and Epidemiological Data
 
-## 📌 Overview
+## Overview
 Machine learning project for analyzing viral infection risk using synthetic clinical, immunological, and epidemiological data.
 
 The goal is to identify key factors associated with infection status and build predictive models capable of estimating infection risk.
